@@ -1,14 +1,13 @@
 import React from 'react';
-import logo from './logo.svg';
-// import "./App.scss";
-import {  } from "module";
+import './App.scss';
+import {} from "module";
 
 function App() {
-  return (
+    return (
     <div className="App">
-      <h1>Web Personal</h1>
+        <h1> Web Personal</h1>
     </div>
-  );
+    );
 }
 
 export default App;
