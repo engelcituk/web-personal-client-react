@@ -25,4 +25,4 @@ const routes = [
     }
 ];
 
-export default routes;git s
+export default routes;
