@@ -1,5 +1,5 @@
 import React from 'react'
-import {Route } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import {Layout} from 'antd'
 import './LayoutAdmin.scss';
 
@@ -10,7 +10,7 @@ export default function LayoutAdmin(props){
         <Layout>
             <h2>Menu sidebar</h2>
             <Layout>
-                <header>header</header>
+                <Header>Header</Header>
                 <Content>
                     <LoadRoutes routes={routes}/>
                 </Content>
@@ -24,13 +24,18 @@ export default function LayoutAdmin(props){
 }
 
 function LoadRoutes({routes}){
-
-    return routes.map((route, index)=> (
-        <Route
-            key={index}
-            path={route.path}
-            exact={route.exact}
-            component= {route.component}
-        />
-    ));
+    return (
+        <Switch>
+            {
+                routes.map((route, index)=> (
+                    <Route
+                        key={index}
+                        path={route.path}
+                        exact={route.exact}
+                        component= {route.component}
+                    />
+                ))
+            }
+        </Switch>
+    );
 }
