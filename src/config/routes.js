@@ -11,42 +11,40 @@ import Home from '../pages/Home';
 import Contact from '../pages/Contact';
 
 
-const routes = [
+const routes = [{
+        path: "/admin",
+        exact: false,
+        component: LayoutAdmin,
+        routes: [{
+                path: "/admin",
+                exact: true,
+                component: AdminHome
+            },
+            {
+                path: "/admin/login",
+                exact: true,
+                component: AdminSigIn
+            }
+        ]
+    },
     {
-    path: "/admin",
-    exact: false,
-    component: LayoutAdmin,
-    routes: [{
-            path: "/admin",
-            exact: true,
-            component: AdminHome
-        },
-        {
-            path: "/admin/login",
-            exact: true,
-            component: AdminSigIn
-        }
-    ]
-},
-{
-    path: "/",
-    component: LayoutBasic,
-    exact: false, //#endregion
-    routes: [
-        {
-            path: "/",
-            component: Home,
-            exact: true,
+        path: "/",
+        component: LayoutBasic,
+        exact: false, //#endregion
+        routes: [{
+                path: "/",
+                component: Home,
+                exact: true,
 
-        },
-        {
-            path: "/contact",
-            component: Contact,
-            exact: true,
+            },
+            {
+                path: "/contact",
+                component: Contact,
+                exact: true,
 
-        }
-    ]
-}
+            }
+        ]
+    }
 ];
 
 export default routes;

@@ -4,7 +4,6 @@ import {Layout} from 'antd'
 import './LayoutAdmin.scss';
 
 export default function LayoutAdmin(props){
-    //console.log(props)
     const {routes} = props;
     const {Header, Content, Footer} = Layout;
     return (
@@ -13,7 +12,7 @@ export default function LayoutAdmin(props){
             <Layout>
                 <header>header</header>
                 <Content>
-                    <LoadRouters routes={routes}/>
+                    <LoadRoutes routes={routes}/>
                 </Content>
                 <Footer>
                     cituk caamal
@@ -24,7 +23,7 @@ export default function LayoutAdmin(props){
     )
 }
 
-function LoadRouters({routes}){
+function LoadRoutes({routes}){
 
     return routes.map((route, index)=> (
         <Route
