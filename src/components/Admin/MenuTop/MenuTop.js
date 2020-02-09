@@ -5,7 +5,10 @@ import Logo from "../../../assets/img/png/logo-white.png";
 
 import "./MenuTop.scss";
 
-export default function MenuTop() {
+export default function MenuTop(props) {
+
+    const {menuCollapsed,setMenuCollapsed}= props;
+
     return (
         <div className="menu-top">
             <div className="menu-top__left">
@@ -13,8 +16,8 @@ export default function MenuTop() {
                 src={Logo}
                 alt="logo cituk"
                 />
-                <Button type="link" onClick={ ()=>console.log('hola')} >
-                <Icon type="menu-fold"/>
+                <Button type="link" onClick={ () => setMenuCollapsed(!menuCollapsed)} >
+                <Icon type={menuCollapsed ? "double-right": "double-left" }/>
                 </Button>
             </div>
             <div className="menu-top__right">
