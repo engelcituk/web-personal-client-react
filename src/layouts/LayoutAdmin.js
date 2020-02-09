@@ -1,24 +1,25 @@
-import React from 'react'
-import {Route, Switch} from 'react-router-dom';
-import {Layout} from 'antd'
-import './LayoutAdmin.scss';
+import React from "react";
+import {Route, Switch} from "react-router-dom";
+import { Layout } from 'antd';
+//import "./LayoutAdmin.scss";
 
 export default function LayoutAdmin(props){
     const {routes} = props;
-    const {Header, Content, Footer} = Layout;
+    const {Header, Content, Footer } = Layout;
     return (
         <Layout>
-            <h2>Menu sidebar</h2>
-            <Layout>
-                <Header>Header</Header>
-                <Content>
+            {/* TO DO: Menu sidebar */}
+            <Layout className="layout-admin">
+                <Header className="layout-admin__header">
+                    {/* TO DO: Menu Top */}
+                </Header>
+                <Content className="layout-admin__content">
                     <LoadRoutes routes={routes}/>
                 </Content>
-                <Footer>
+                <Footer className="layout-admin__footer">
                     cituk caamal
                 </Footer>
             </Layout>
-            <h5>Footer</h5>
         </Layout>
     )
 }
