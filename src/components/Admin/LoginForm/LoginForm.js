@@ -1,7 +1,7 @@
 import React ,{useState} from 'react'
 import './LoginForm.scss';
 import { Form, Icon, Input, Button, notification } from 'antd';
-/*import { minLengthValidation, emailValidation } from '../../../utils/FormValidation';*/
+import { ACCESS_TOKEN, REFRESH_TOKEN } from '../../../utils/constants';
 import { signInApi } from '../../../api/user'; 
 
 export default function LoginForm() {
@@ -17,10 +17,23 @@ export default function LoginForm() {
         })
     }
 
-    const login =  (e) => {
-    e.preventDefault();
-    signInApi(inputs);
+    const login =  async (e) => {
+        e.preventDefault();
+        const result = await signInApi(inputs);
+        if(!result.ok){
+            notification['error']({
+                message: result.message
+            });
+        }else{
+            const {accessToken, refreshToken} = result;
 
+            localStorage.setItem(ACCESS_TOKEN, accessToken);
+            localStorage.setItem(REFRESH_TOKEN, refreshToken );
+            notification['success']({
+                message: "Login correcto"
+            });
+            window.location.href= "/admin";
+        }
     }
     return (
         <Form className="login-form" onChange={changeForm} onSubmit={login} >
