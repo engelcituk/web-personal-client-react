@@ -53,7 +53,7 @@ const inputValidation = e => {
         });
     }
 }
-    const register = (e) => {
+    const register = async (e) => {
         e.preventDefault();
         const {email, password, repeatPassword, privacyPolicy} = formValid;
         const emailVal = inputs.email;
@@ -72,7 +72,16 @@ const inputValidation = e => {
                     message: "Las contraseñas no coinciden"
                 })
             }else {
-                const result =signUpApi(inputs);
+                const result = await signUpApi(inputs);
+                if(!result.ok){
+                    notification['error']({
+                        message: result.message
+                    })
+                }else{
+                    notification['success']({
+                        message: result.message
+                    })
+                }
             }
         }
 
