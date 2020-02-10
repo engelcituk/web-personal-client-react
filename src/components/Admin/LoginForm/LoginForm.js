@@ -1,8 +1,8 @@
 import React ,{useState} from 'react'
 import './LoginForm.scss';
 import { Form, Icon, Input, Button, notification } from 'antd';
-/*import { minLengthValidation, emailValidation } from '../../../utils/FormValidation';
-import { signUpApi } from '../../../api/user'; */
+/*import { minLengthValidation, emailValidation } from '../../../utils/FormValidation';*/
+import { signInApi } from '../../../api/user'; 
 
 export default function LoginForm() {
     const [inputs, setInputs] = useState({
@@ -17,10 +17,10 @@ export default function LoginForm() {
         })
     }
 
-    const login = (e) => {
+    const login =  (e) => {
     e.preventDefault();
+    signInApi(inputs);
 
-        console.log('login...',inputs);
     }
     return (
         <Form className="login-form" onChange={changeForm} onSubmit={login} >
