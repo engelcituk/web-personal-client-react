@@ -16,7 +16,7 @@ export default function SignIng(){
                 <h1 className="sign-in__content-logo">
                     <img src={Logo} alt="logo"/>
                 </h1>
-                <div class="sign-in__content-tabs">
+                <div className="sign-in__content-tabs">
                     <Tabs type="card">
                         <TabPane tab={<span>Entrar</span>} key="1">
                         Componente del login
