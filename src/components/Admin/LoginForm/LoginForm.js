@@ -1,12 +1,29 @@
-import React from 'react'
+import React ,{useState} from 'react'
 import './LoginForm.scss';
 import { Form, Icon, Input, Button, notification } from 'antd';
 /*import { minLengthValidation, emailValidation } from '../../../utils/FormValidation';
 import { signUpApi } from '../../../api/user'; */
 
 export default function LoginForm() {
+    const [inputs, setInputs] = useState({
+        email:"",
+        password:""
+    });
+
+    const changeForm = (e) => {
+        setInputs({
+            ...inputs,
+            [e.target.name]:e.target.value
+        })
+    }
+
+    const login = (e) => {
+    e.preventDefault();
+
+        console.log('login...',inputs);
+    }
     return (
-        <Form className="login-form">
+        <Form className="login-form" onChange={changeForm} onSubmit={login} >
             <Form.Item>
                 <Input
                     prefix=
