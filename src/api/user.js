@@ -16,7 +16,7 @@ export function signUpApi(data) {
         })
         .then(result => {
             if (result.user) {
-                return { status: true, message: "El usuario se ha creado" };
+                return { ok: true, message: "El usuario se ha creado" };
             }
             return { ok: false, message: result.message };
         })
