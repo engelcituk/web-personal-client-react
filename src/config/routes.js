@@ -4,7 +4,7 @@ import LayoutBasic from '../layouts/LayoutBasic'
 
 //admin  pages
 import AdminHome from '../pages/Admin/';
-import AdminSigIn from '../pages/Admin/SigIn';
+import AdminSigIn from '../pages/Admin/SignIn';
 
 //pages
 import Home from '../pages/Home';
