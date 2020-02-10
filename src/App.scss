@@ -1,7 +1,10 @@
-.App {
-    color: red;
+@import './scss/index.scss';
+.success {
+    border: 1px solid $success;
+    background-color: $background-success;
 }
 
-.App h1 {
-    color: red;
+.error {
+    border: 1px solid $error;
+    background-color: $background-error;
 }

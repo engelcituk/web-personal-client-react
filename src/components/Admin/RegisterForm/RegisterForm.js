@@ -55,7 +55,27 @@ const inputValidation = e => {
 }
     const register = (e) => {
         e.preventDefault();
-        console.log(formValid   )
+        const {email, password, repeatPassword, privacyPolicy} = formValid;
+        const emailVal = inputs.email;
+        const passwordVal = inputs.password;
+        const repeatPasswordVal = inputs.repeatPassword;
+        const privacyPolicVal = inputs.privacyPolicy;
+
+
+        if(!emailVal || !passwordVal || !repeatPasswordVal || !privacyPolicVal){
+            notification['error']({
+                message: "Todos los campos son obligatorios"
+            })
+        }else {
+            if(passwordVal !==repeatPasswordVal){
+                notification['error']({
+                    message: "Las contraseñas no coinciden"
+                })
+            }else {
+                
+            }
+        }
+
     }
     return (
         <Form className="register-form" onSubmit={register} onChange={changeForm}>
