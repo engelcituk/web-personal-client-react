@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import './RegisterForm.scss';
 import { Form, Icon, Input, Button, Checkbox, notification } from 'antd';
 import {minLengthValidation, emailValidation} from '../../../utils/FormValidation';
-
+import {signUpApi} from '../../../api/user'
 
 export default function RegisterForm(){
     const [inputs, setInputs]  = useState({
@@ -72,7 +72,7 @@ const inputValidation = e => {
                     message: "Las contraseñas no coinciden"
                 })
             }else {
-                
+                const result =signUpApi(inputs);
             }
         }
 
