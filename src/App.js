@@ -1,18 +1,20 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import routes from './config/routes';
-//import AdminHome from './pages/Admin';
+import AuthProvider from './providers/authProvider';
 
 
 function App() {
     return (
-     <Router>
-         <Switch>
-             {routes.map ((route, index)=> (
-                <RouteWithSubRoutes key={index} {...route}/>
-             ))}
-         </Switch>
-     </Router>
+        <AuthProvider>
+            <Router>
+                <Switch>
+                    {routes.map ((route, index)=> (
+                        <RouteWithSubRoutes key={index} {...route}/>
+                    ))}
+                </Switch>
+            </Router>
+        </AuthProvider>
     );
 }
 
