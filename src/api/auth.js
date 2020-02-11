@@ -41,7 +41,7 @@ export function refreshAccessToken(refreshToken) {
         })
         .then(result => {
             if (!result) {
-                //desloguear al usuario
+                logout(); // cerramos la sesion del usuario
             } else {
                 const { accessToken, refreshToken } = result;
                 localStorage.setItem(ACCESS_TOKEN, accessToken);
@@ -51,6 +51,10 @@ export function refreshAccessToken(refreshToken) {
         .catch(err => {
             return err.message;
         })
+}
+export function logout() {
+    localStorage.removeItem(ACCESS_TOKEN);
+    localStorage.removeItem(REFRESH_TOKEN);
 }
 
 function willExpireToken(token) {
