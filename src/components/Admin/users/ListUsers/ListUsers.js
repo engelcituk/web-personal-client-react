@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 import { Switch,List, Avatar, Button, Icon } from 'antd';
 import NoAvatar from '../../../../assets/img/png/no-avatar.png';
-import Modal from '../../../modal'; // se importa un modal
+import Modal from '../../../modal'; // se importa componente modal
+import EditUserForm from '../EditUserForm'; // se importa componente formulario de edicion de usuarios
+
 
 import './ListUsers.scss';
 
 export default function ListUsers(props){
+    //estados
     const {usersActive, usersInactive} = props;
-  
-    const [viewUsersActives, setViewUsersActives] = useState(true)
+    const [viewUsersActives, setViewUsersActives] = useState(true);
+    //estados para el modal
+    const [isVisibleModal, setIsVisibleModal] = useState(false)
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalContent, setModalContent] = useState(null)
 
 
     return (
@@ -25,22 +31,37 @@ export default function ListUsers(props){
             </div>
             {
             viewUsersActives ? 
-            <UsersActive usersActive={usersActive} /> :
+            <UsersActive
+                usersActive = { usersActive }
+                //props para el modal
+                setIsVisibleModal = { setIsVisibleModal }
+                setModalTitle = { setModalTitle }
+                setModalContent = { setModalContent } 
+            /> :
             <UsersInactive usersInactive={usersInactive}/>
             }
             <Modal
-                title="Mi modal"
-                isVisible= {true}
-                setIsVisible= { ()=> console.log('shgiejf')}
+                title={modalTitle}
+                isVisible= {isVisibleModal}
+                setIsVisible= { setIsVisibleModal}
             >
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, eum? Adipisci officia perspiciatis cupiditate voluptates. Maxime dolores fugit, delectus odit aspernatur cupiditate laborum sunt facilis fuga similique architecto, magnam recusandae!
+                {modalContent}
             </Modal>
         </div>
     );
 } 
 
 function UsersActive(props){
-    const {usersActive} = props;
+    const {usersActive, setIsVisibleModal, setModalTitle, setModalContent} = props;
+
+    //this function show the modal
+    const editUser = user => {
+        setIsVisibleModal(true);
+        setModalTitle(`Editar a 
+                       ${user.name ? user.name : "..."}
+                       ${user.lastname ? user.lastname : "..."}`);
+        setModalContent(<EditUserForm user={user}/>);
+    }
     return (
         <List
             className="users-active"
@@ -52,7 +73,7 @@ function UsersActive(props){
                         actions={[
                             <Button
                                 type="primary"
-                                onClick={ ()=> console.log('edit a user')}
+                                onClick={ ()=> editUser(user )}
                             >
                                 <Icon type="edit"/> 
                             </Button>,
