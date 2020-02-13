@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {getAccessTokenApi} from '../../../api/auth';
 import {getUsersApiActive} from '../../../api/user';
+//importo componente que trae la lista de usuarios activos y desactivados
+import ListUsers from '../../../components/Admin/users/ListUsers';
 
 import './Users.scss';
 
@@ -10,8 +12,6 @@ export default function Users(){
 
     const token = getAccessTokenApi(); 
 
-    console.log("usersActive: ",usersActive);
-    console.log("usersInactive: ",usersInactive);
 
     useEffect(()=>{
         getUsersApiActive(token,true).then(response => {
@@ -22,8 +22,11 @@ export default function Users(){
         })
     },[token])
     return (
-        <div>
-            <h1>Lista de usuarios</h1>
+        <div className="users">
+            <ListUsers
+                usersActive={usersActive}
+                usersInactive={usersInactive}
+            />
         </div>
     );
 }
