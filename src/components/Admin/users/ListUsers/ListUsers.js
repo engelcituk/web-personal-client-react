@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Switch,List, Avatar, Button, Icon } from 'antd';
 import NoAvatar from '../../../../assets/img/png/no-avatar.png';
-import './ListUsers.scss';
-import { type } from 'os';
+import Modal from '../../../modal'; // se importa un modal
 
+import './ListUsers.scss';
 
 export default function ListUsers(props){
     const {usersActive, usersInactive} = props;
@@ -21,12 +21,20 @@ export default function ListUsers(props){
             <span>
                 {viewUsersActives ? "Usuarios activos" : "Usuarios desactivados"}
             </span>
-                {
-                    viewUsersActives ? 
-                    <UsersActive usersActive={usersActive} /> :
-                    <UsersInactive usersInactive={usersInactive}/>
-                }
+                
             </div>
+            {
+            viewUsersActives ? 
+            <UsersActive usersActive={usersActive} /> :
+            <UsersInactive usersInactive={usersInactive}/>
+            }
+            <Modal
+                title="Mi modal"
+                isVisible= {true}
+                setIsVisible= { ()=> console.log('shgiejf')}
+            >
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, eum? Adipisci officia perspiciatis cupiditate voluptates. Maxime dolores fugit, delectus odit aspernatur cupiditate laborum sunt facilis fuga similique architecto, magnam recusandae!
+            </Modal>
         </div>
     );
 } 
