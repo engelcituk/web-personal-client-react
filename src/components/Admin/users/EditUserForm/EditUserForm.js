@@ -12,11 +12,26 @@ import './EditUserForm.scss';
 export default function EditUserForm(props){
     const {user} = props;
     const [avatar, setAvatar] = useState(null);
+    const [userData, setUserData] = useState({
+        name: user.name,
+        lastname: user.lastaname,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar
+    });
+
+    const updateUser = e => {
+        e.preventDefault();
+        console.log(userData);
+    }
 
     return (
         <div className="edit-user-form">
             <UploadAvatar avatar={avatar} setAvatar={setAvatar}/>
-            <h2>{user.email}</h2>
+            <EditForm   
+                userData={userData}
+                setUserData={setUserData}
+                updateUser={updateUser}/>
         </div>
 
     )
@@ -47,6 +62,60 @@ function UploadAvatar(props){
             )}
         </div>
     )
-    
+}
+
+function EditForm(props){
+    const {userData, setUserData, updateUser} = props;
+    const {Option} = Select;
+
+    return (
+        <Form className="form-edit" onSubmit={updateUser}>
+            <Row gutter={24}>
+                <Col span={12}>
+                    <Form.Item>
+                        <Input
+                            prefix={ <Icon type="user"/> }
+                            placeholder="Nombre"
+                            defaultValue={userData.name}
+                            onChange={ e => setUserData({...userData, name: e.target.value})}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item>
+                        <Input
+                            prefix={ <Icon type="user"/> }
+                            placeholder="Apellido"
+                            defaultValue={userData.lastaname}
+                            onChange={ e => setUserData({...userData, lastname: e.target.value})}
+                        />
+                    </Form.Item>
+                </Col>
+            </Row>
+            <Row gutter={24}>
+                <Col span={12}>
+                    <Form.Item>
+                        <Input
+                            prefix={ <Icon type="mail"/> }
+                            placeholder="Correo electrónico"
+                            defaultValue={userData.email}
+                            onChange={ e => setUserData({...userData, email: e.target.value})}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}></Col>
+            </Row>
+            <Row gutter={24}>
+                <Col span={12}></Col>
+                <Col span={12}></Col>
+            </Row>
+
+            <Form.Item>
+                <Button type="primary" htmlType="submit" className="btn-submit">
+                    Actualizar usuario
+                </Button>
+            </Form.Item>
+        </Form>
+    )
 
 }
