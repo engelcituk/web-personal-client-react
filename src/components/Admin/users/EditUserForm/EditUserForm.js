@@ -1,4 +1,4 @@
-import React, { useState , useCallback} from 'react';
+import React, { useState, useEffect, useCallback} from 'react';
  import {Avatar, Form, Icon, Input, Select,Button, Row, Col } from 'antd';
  import { useDropzone } from 'react-dropzone';
  import NoAvatar from '../../../../assets/img/png/no-avatar.png'
@@ -19,6 +19,13 @@ export default function EditUserForm(props){
         role: user.role,
         avatar: user.avatar
     });
+
+    useEffect( ()=> {
+        if(avatar){
+            setUserData({...userData,avatar})
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[avatar])
 
     const updateUser = e => {
         e.preventDefault();
@@ -103,11 +110,44 @@ function EditForm(props){
                         />
                     </Form.Item>
                 </Col>
-                <Col span={12}></Col>
+                <Col span={12}>
+                    <Form.Item>
+                        <Select
+                            placeholder="Selecciona un rol"
+                            onChange={ e => setUserData({...userData, role: e})}
+                            defaultValue={userData.role}
+                        >
+                            <Option value="admin">Administrador</Option>
+                            <Option value="editor">Editor</Option>
+                            <Option value="reviewer">Revisor</Option>
+
+                        </Select>
+                    </Form.Item>
+                </Col>
             </Row>
             <Row gutter={24}>
-                <Col span={12}></Col>
-                <Col span={12}></Col>
+                <Col span={12}>
+                    <Form.Item>
+                        <Input
+                            prefix={ <Icon type="lock"/> }
+                            type="password"
+                            placeholder="Contraseña"
+                            defaultValue={userData.password }
+                            onChange={ e => setUserData({...userData, repeatPassword: e.target.value})}
+                        />
+                    </Form.Item>
+                </Col>
+                <Col span={12}>
+                    <Form.Item>
+                        <Input
+                            prefix={ <Icon type="lock"/> }
+                            type="password"
+                            placeholder="Repetir contraseña"
+                            defaultValue={userData.password }
+                            onChange={ e => setUserData({...userData, password: e.target.value})}
+                        />
+                    </Form.Item>
+                </Col>
             </Row>
 
             <Form.Item>
