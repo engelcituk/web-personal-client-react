@@ -100,9 +100,7 @@ export function signInApi(data) {
     const params = {
         method: "PUT",
         body: formData,
-        mode: 'no-cors',
         headers: {
-            "Content-Type": "application/json",
             "Authorization":token
         }
     }
