@@ -11,7 +11,7 @@ import './ListUsers.scss';
 
 export default function ListUsers(props){
     //estados
-    const {usersActive, usersInactive} = props;
+    const {usersActive, usersInactive, setReloadUsers} = props;
     const [viewUsersActives, setViewUsersActives] = useState(true);
     //estados para el modal
     const [isVisibleModal, setIsVisibleModal] = useState(false)
@@ -39,6 +39,7 @@ export default function ListUsers(props){
                 setIsVisibleModal = { setIsVisibleModal }
                 setModalTitle = { setModalTitle }
                 setModalContent = { setModalContent } 
+                setReloadUsers={setReloadUsers}
             /> :
             <UsersInactive usersInactive={usersInactive}/>
             }
@@ -54,7 +55,13 @@ export default function ListUsers(props){
 } 
 
 function UsersActive(props){
-    const {usersActive, setIsVisibleModal, setModalTitle, setModalContent} = props;
+    const {
+        usersActive,
+        setIsVisibleModal,
+        setModalTitle,
+        setModalContent,
+        setReloadUsers
+    } = props;
 
     //this function show the modal
     const editUser = user => {
@@ -62,7 +69,13 @@ function UsersActive(props){
         setModalTitle(`Editar a 
                        ${user.name ? user.name : "..."}
                        ${user.lastname ? user.lastname : "..."}`);
-        setModalContent(<EditUserForm user={user}/>);
+        setModalContent(
+            <EditUserForm 
+                user={user}
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadUsers={setReloadUsers}
+            />
+        );
     }
     return (
         <List

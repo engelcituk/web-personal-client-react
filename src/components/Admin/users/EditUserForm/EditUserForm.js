@@ -12,7 +12,7 @@ import Modal from '../../../modal'; // se importa un modal */
 import './EditUserForm.scss';
 
 export default function EditUserForm(props){
-    const {user} = props;
+    const {user, setIsVisibleModal,setReloadUsers} = props;
     const [avatar, setAvatar] = useState(null);
     const [userData, setUserData] = useState({});
     
@@ -44,6 +44,7 @@ export default function EditUserForm(props){
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[avatar])
 
+    //para actualizar los datos del usuario
     const updateUser = e => {
         e.preventDefault();
         const token = getAccessTokenApi();
@@ -54,8 +55,11 @@ export default function EditUserForm(props){
                 notification["error"]({
                     message: "Las contraseñas no coinciden, tienen que ser iguales"
                 });
+                return;
+            }else {
+                delete userUpdate.repeatPassword;
             }
-            return;
+            
         }
 
         if(!userUpdate.name || !userUpdate.lastname || !userUpdate.email ){
@@ -71,6 +75,8 @@ export default function EditUserForm(props){
                     notification["success"]({
                         message: result.message
                     });
+                    setIsVisibleModal(false);//oculto el modal
+                    setReloadUsers(true); // se recarga la lista con el cambio
                 });
             })
         }else {
@@ -78,6 +84,9 @@ export default function EditUserForm(props){
                 notification["success"]({
                     message: result.message
                 });
+                setIsVisibleModal(false);//oculto el modal
+                setReloadUsers(true);// se recarga la lista con el cambio
+
             });
         }
     }
@@ -157,7 +166,7 @@ function EditForm(props){
                         <Input
                             prefix={ <Icon type="user"/> }
                             placeholder="Apellido"
-                            value={userData.lastaname}
+                            value={userData.lastname}
                             onChange={ e => setUserData({...userData, lastname: e.target.value})}
                         />
                     </Form.Item>

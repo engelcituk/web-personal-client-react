@@ -100,12 +100,12 @@ export function signInApi(data) {
     const params = {
         method: "PUT",
         body: formData,
+        mode: 'no-cors',
         headers: {
             "Content-Type": "application/json",
             "Authorization":token
         }
     }
-
     return fetch(url, params)
         .then(response => {
             return response.json();
