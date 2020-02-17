@@ -22,7 +22,9 @@ export default function EditUserForm(props){
             lastname: user.lastname,
             email: user.email,
             role: user.role,
-            avatar: user.avatar
+            avatar: user.avatar,
+            password: "",
+            repeatPassword:""
         })  
     },[user])
 
@@ -206,7 +208,7 @@ function EditForm(props){
                             type="password"
                             placeholder="Contraseña"
                             value={userData.password }
-                            onChange={ e => setUserData({...userData, repeatPassword: e.target.value})}
+                            onChange={ e => setUserData({...userData, password: e.target.value})}
                         />
                     </Form.Item>
                 </Col>
@@ -216,8 +218,8 @@ function EditForm(props){
                             prefix={ <Icon type="lock"/> }
                             type="password"
                             placeholder="Repetir contraseña"
-                            value={userData.password }
-                            onChange={ e => setUserData({...userData, password: e.target.value})}
+                            value={userData.repeatPassword }
+                            onChange={ e => setUserData({...userData, repeatPassword: e.target.value})}
                         />
                     </Form.Item>
                 </Col>
