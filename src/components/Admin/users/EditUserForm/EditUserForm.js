@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback} from 'react';
  import {Avatar, Form, Icon, Input, Select,Button, Row, Col } from 'antd';
  import { useDropzone } from 'react-dropzone';
- import NoAvatar from '../../../../assets/img/png/no-avatar.png'
+ import NoAvatar from '../../../../assets/img/png/no-avatar.png';
+ import {getAvatarApi} from '../../../../api/user';
 
  
 /*
@@ -12,17 +13,32 @@ import './EditUserForm.scss';
 export default function EditUserForm(props){
     const {user} = props;
     const [avatar, setAvatar] = useState(null);
-    const [userData, setUserData] = useState({
-        name: user.name,
-        lastname: user.lastaname,
-        email: user.email,
-        role: user.role,
-        avatar: user.avatar
-    });
+    const [userData, setUserData] = useState({});
+    
+    useEffect( ()=> {
+        setUserData({
+            name: user.name,
+            lastname: user.lastaname,
+            email: user.email,
+            role: user.role,
+            avatar: user.avatar
+        })  
+    },[user])
+
+    //para cambiar el avatar
+    useEffect( ()=> {
+        if(user.avatar){
+            getAvatarApi(user.avatar).then(response => {
+                setAvatar(response);
+            })
+        }else {
+            setAvatar(null)
+        }
+    },[user])
 
     useEffect( ()=> {
         if(avatar){
-            setUserData({...userData,avatar})
+            setUserData({...userData,avatar:avatar.file})
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[avatar])
@@ -46,6 +62,20 @@ export default function EditUserForm(props){
 
 function UploadAvatar(props){
     const { avatar, setAvatar}  = props;
+    const [avatarUrl, setAvatarUrl] =useState(null);
+
+    useEffect( ()=> {
+        if(avatar){
+            if(avatar.preview){
+                setAvatarUrl(avatar.preview)
+            }else {
+                setAvatarUrl(avatar)
+            }
+        }else {
+            setAvatarUrl(null)
+        }
+    },[avatar])
+
     const onDrop = useCallback(
         acceptedFiles => {
             const file = acceptedFiles[0];
@@ -65,7 +95,7 @@ function UploadAvatar(props){
             {isDragActive ? (
                 <Avatar size={150} src={NoAvatar}/>
             ): (
-                <Avatar size={150} src={ avatar ? avatar.preview : NoAvatar}/>
+                <Avatar size={150} src={ avatarUrl ? avatarUrl : NoAvatar}/>
             )}
         </div>
     )
@@ -83,7 +113,7 @@ function EditForm(props){
                         <Input
                             prefix={ <Icon type="user"/> }
                             placeholder="Nombre"
-                            defaultValue={userData.name}
+                            value={userData.name}
                             onChange={ e => setUserData({...userData, name: e.target.value})}
                         />
                     </Form.Item>
@@ -93,7 +123,7 @@ function EditForm(props){
                         <Input
                             prefix={ <Icon type="user"/> }
                             placeholder="Apellido"
-                            defaultValue={userData.lastaname}
+                            value={userData.lastaname}
                             onChange={ e => setUserData({...userData, lastname: e.target.value})}
                         />
                     </Form.Item>
@@ -105,7 +135,7 @@ function EditForm(props){
                         <Input
                             prefix={ <Icon type="mail"/> }
                             placeholder="Correo electrónico"
-                            defaultValue={userData.email}
+                            value={userData.email}
                             onChange={ e => setUserData({...userData, email: e.target.value})}
                         />
                     </Form.Item>
@@ -115,7 +145,7 @@ function EditForm(props){
                         <Select
                             placeholder="Selecciona un rol"
                             onChange={ e => setUserData({...userData, role: e})}
-                            defaultValue={userData.role}
+                            value={userData.role}
                         >
                             <Option value="admin">Administrador</Option>
                             <Option value="editor">Editor</Option>
@@ -132,7 +162,7 @@ function EditForm(props){
                             prefix={ <Icon type="lock"/> }
                             type="password"
                             placeholder="Contraseña"
-                            defaultValue={userData.password }
+                            value={userData.password }
                             onChange={ e => setUserData({...userData, repeatPassword: e.target.value})}
                         />
                     </Form.Item>
@@ -143,7 +173,7 @@ function EditForm(props){
                             prefix={ <Icon type="lock"/> }
                             type="password"
                             placeholder="Repetir contraseña"
-                            defaultValue={userData.password }
+                            value={userData.password }
                             onChange={ e => setUserData({...userData, password: e.target.value})}
                         />
                     </Form.Item>

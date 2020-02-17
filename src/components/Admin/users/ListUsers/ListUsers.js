@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Switch,List, Avatar, Button, Icon } from 'antd';
 import NoAvatar from '../../../../assets/img/png/no-avatar.png';
 import Modal from '../../../modal'; // se importa componente modal
 import EditUserForm from '../EditUserForm'; // se importa componente formulario de edicion de usuarios
+import {getAvatarApi} from '../../../../api/user';
+
 
 
 import './ListUsers.scss';
@@ -67,42 +69,57 @@ function UsersActive(props){
             className="users-active"
             itemLayout="horizontal"
              dataSource={usersActive}
-             renderItem = {
-                 user => (
-                     <List.Item
-                        actions={[
-                            <Button
-                                type="primary"
-                                onClick={ ()=> editUser(user )}
-                            >
-                                <Icon type="edit"/> 
-                            </Button>,
-                            <Button
-                                type="danger"
-                                onClick={ ()=> console.log('desactivar a user')}
-                            >
-                                <Icon type="stop"/> 
-                            </Button>,
-                             <Button
-                                type="danger"
-                                onClick={ ()=> console.log('borrar a user')}
-                            >
-                                <Icon type="delete"/> 
-                            </Button>
-                        ]}
-                     >
-                         <List.Item.Meta
-                            avatar = {<Avatar src={ user.avatar ? user.avatar : NoAvatar} />}
-                            title={`
-                                ${ user.name ? user.name : '...'}
-                                ${ user.lastname ? user.lastname : '...'}
-                            `}
-                            description={user.email}
-                         />
-                     </List.Item>
-                 )
-             }
+             renderItem = {user => <UserActive user={user} editUser={editUser} /> }
         />
+    )
+}
+
+function UserActive(props){
+    const {user, editUser}=props;
+    const [avatar, setAvatar] = useState(null);
+
+    useEffect( ()=> {
+        if(user.avatar){
+            getAvatarApi(user.avatar).then(response => {
+                setAvatar(response);
+            })
+        }else {
+            setAvatar(null)
+        }
+    },[user])
+
+    return (
+        <List.Item
+            actions={[
+                <Button
+                    type="primary"
+                    onClick={ ()=> editUser(user )}
+                >
+                    <Icon type="edit"/> 
+                </Button>,
+                <Button
+                    type="danger"
+                    onClick={ ()=> console.log('desactivar a user')}
+                >
+                    <Icon type="stop"/> 
+                </Button>,
+                    <Button
+                    type="danger"
+                    onClick={ ()=> console.log('borrar a user')}
+                >
+                    <Icon type="delete"/> 
+                </Button>
+            ]}
+            >
+                <List.Item.Meta
+                avatar = {<Avatar src={ avatar ? avatar : NoAvatar} />}
+                title={`
+                    ${ user.name ? user.name : '...'}
+                    ${ user.lastname ? user.lastname : '...'}
+                `}
+                description={user.email}
+                />
+            </List.Item>
     )
 }
 
@@ -114,36 +131,51 @@ function UsersInactive(props){
             className="users-active"
             itemLayout="horizontal"
              dataSource={usersInactive}
-             renderItem = {
-                 user => (
-                     <List.Item
-                        actions={[
-                            <Button
-                                type="primary"
-                                onClick={ ()=> console.log('activar a user')}
-                            >
-                                <Icon type="check"/> 
-                            </Button>,
-                            
-                             <Button
-                                type="danger"
-                                onClick={ ()=> console.log('borrar a user')}
-                            >
-                                <Icon type="delete"/> 
-                            </Button>
-                        ]}
-                     >
-                         <List.Item.Meta
-                            avatar = {<Avatar src={ user.avatar ? user.avatar : NoAvatar} />}
-                            title={`
-                                ${ user.name ? user.name : '...'}
-                                ${ user.lastname ? user.lastname : '...'}
-                            `}
-                            description={user.email}
-                         />
-                     </List.Item>
-                 )
-             }
+             renderItem = { user => <UserInactive user={user}/> }
         />
+    )
+}
+
+function UserInactive(props){
+    const {user}=props;
+    const [avatar, setAvatar] = useState(null);
+
+    useEffect( ()=> {
+        if(user.avatar){
+            getAvatarApi(user.avatar).then(response => {
+                setAvatar(response);
+            })
+        }else {
+            setAvatar(null)
+        }
+    },[user])
+
+    return (
+        <List.Item
+        actions={[
+            <Button
+                type="primary"
+                onClick={ ()=> console.log('activar a user')}
+            >
+                <Icon type="check"/> 
+            </Button>,
+            
+             <Button
+                type="danger"
+                onClick={ ()=> console.log('borrar a user')}
+            >
+                <Icon type="delete"/> 
+            </Button>
+        ]}
+     >
+         <List.Item.Meta
+            avatar = {<Avatar src={ avatar ? avatar : NoAvatar} />}
+            title={`
+                ${ user.name ? user.name : '...'}
+                ${ user.lastname ? user.lastname : '...'}
+            `}
+            description={user.email}
+         />
+     </List.Item>
     )
 }
