@@ -123,7 +123,23 @@ function UserActive(props){
         confirm({
             title: "Eliminando usuario",
             content: `¿Estas seguro que quieres eliminar a ${user.email}`,
-
+            okText: "Eliminar",
+            okType: "danger",
+            cancelText: "Cancelar",
+            onOk(){
+                deleteUserApi(accessToken, user._id)
+                    .then( response => {
+                        notification["success"]({
+                            message: response
+                        });
+                        setReloadUsers(true)
+                    })
+                    .catch( err => {
+                        notification["error"]({
+                            message: err
+                    })
+                })
+            }
         });
     }
 
@@ -144,7 +160,7 @@ function UserActive(props){
                 </Button>,
                     <Button
                     type="danger"
-                    onClick={ ()=> console.log('borrar a user')}
+                    onClick={ showDeleteConfirm }
                 >
                     <Icon type="delete"/> 
                 </Button>
@@ -205,6 +221,32 @@ function UserInactive(props){
             })
         })
     }
+
+    const showDeleteConfirm = () => {
+        const accessToken = getAccessTokenApi();
+
+        confirm({
+            title: "Eliminando usuario",
+            content: `¿Estas seguro que quieres eliminar a ${user.email}`,
+            okText: "Eliminar",
+            okType: "danger",
+            cancelText: "Cancelar",
+            onOk(){
+                deleteUserApi(accessToken, user._id)
+                    .then( response => {
+                        notification["success"]({
+                            message: response
+                        });
+                        setReloadUsers(true)
+                    })
+                    .catch( err => {
+                        notification["error"]({
+                            message: err
+                    })
+                })
+            }
+        });
+    }
     return (
         <List.Item
         actions={[
@@ -217,7 +259,7 @@ function UserInactive(props){
             
              <Button
                 type="danger"
-                onClick={ ()=> console.log('borrar a user')}
+                onClick={ showDeleteConfirm }
             >
                 <Icon type="delete"/> 
             </Button>
