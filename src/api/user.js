@@ -46,14 +46,14 @@ export function signInApi(data) {
             return err.message;
         })
 }
- export function getUsersApi(token){
+export function getUsersApi(token) {
     const url = `${basePath}/${apiVersion}/users`;
 
     const params = {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization":token
+            "Authorization": token
         }
     }
     return fetch(url, params)
@@ -61,21 +61,21 @@ export function signInApi(data) {
             return response.json();
         })
         .then(result => {
-            
-            return result; 
+
+            return result;
         })
         .catch(err => {
-            return err.message ;
+            return err.message;
         })
- }
- export function getUsersApiActive(token, status){
+}
+export function getUsersApiActive(token, status) {
     const url = `${basePath}/${apiVersion}/users-active?active=${status}`;
 
     const params = {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
-            "Authorization":token
+            "Authorization": token
         }
     }
     return fetch(url, params)
@@ -83,15 +83,15 @@ export function signInApi(data) {
             return response.json();
         })
         .then(result => {
-            
+
             return result;
         })
         .catch(err => {
-            return err.message ;
+            return err.message;
         })
- }
+}
 
- export function uploadAvatarApi(token, avatar, userId){
+export function uploadAvatarApi(token, avatar, userId) {
     const url = `${basePath}/${apiVersion}/upload-avatar/${userId }`;
 
     const formData = new FormData();
@@ -101,7 +101,7 @@ export function signInApi(data) {
         method: "PUT",
         body: formData,
         headers: {
-            "Authorization":token
+            "Authorization": token
         }
     }
     return fetch(url, params)
@@ -109,14 +109,14 @@ export function signInApi(data) {
             return response.json();
         })
         .then(result => {
-            return result; 
+            return result;
         })
         .catch(err => {
             return err.message;
         })
- }
+}
 
- export function getAvatarApi(avatarName){
+export function getAvatarApi(avatarName) {
     const url = `${basePath}/${apiVersion}/get-avatar/${avatarName }`;
 
     return fetch(url)
@@ -126,9 +126,9 @@ export function signInApi(data) {
         .catch(err => {
             return err.message;
         })
- }
+}
 
- export function updateUserApi(token, user, userId){
+export function updateUserApi(token, user, userId) {
     const url = `${basePath}/${apiVersion}/users/${userId }`;
 
 
@@ -136,7 +136,7 @@ export function signInApi(data) {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            "Authorization":token 
+            "Authorization": token
         },
         body: JSON.stringify(user),
     }
@@ -146,24 +146,24 @@ export function signInApi(data) {
             return response.json();
         })
         .then(result => {
-            return result; 
+            return result;
         })
         .catch(err => {
             return err.message;
         })
- }
+}
 
- export function activateUserApi(token, userId, status){
+export function activateUserApi(token, userId, status) {
     const url = `${basePath}/${apiVersion}/activate-user/${userId}`;
 
     const params = {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": token 
+            "Authorization": token
         },
         body: JSON.stringify({
-            active: status 
+            active: status
         }),
     }
 
@@ -172,9 +172,32 @@ export function signInApi(data) {
             return response.json();
         })
         .then(result => {
-            return result.message; 
+            return result.message;
         })
         .catch(err => {
             return err.message;
         })
- }
+}
+
+export function deleteUserApi(token, userId) {
+    const url = `${basePath}/${apiVersion}/users/${userId}`;
+
+    const params = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        }
+    }
+
+    return fetch(url, params)
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result.message;
+        })
+        .catch(err => {
+            return err.message;
+        })
+}
