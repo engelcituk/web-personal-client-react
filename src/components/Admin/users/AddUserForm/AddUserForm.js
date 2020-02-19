@@ -10,7 +10,39 @@ export default function AddUserForm(props){
 
     const addUser = (event) => {
         event.preventDefault();
-        console.log('creando usuario')
+        if(
+            !userData.name ||
+            !userData.lastname ||
+            !userData.role ||
+            !userData.email ||
+            !userData.password ||
+            !userData.repeatPassword 
+        ){
+            notification["error"]({
+                message: "Todos los campos son obligatorios"
+            });
+        }else if( userData.password !== userData.repeatPassword ){
+            notification["error"]({
+                message: "Las contraseñas tiene que ser iguales"
+            });
+        }else {
+            const accessToken = getAccessTokenApi();
+            signUpAdminApi(accessToken,userData)
+                .then( response => {
+                    notification["success"]({
+                        message: response
+                    });
+                    setIsVisibleModal(false);
+                    setReloadUsers(true);
+                    setUserData({});
+                })
+                .catch( err => {
+                    notification["error"]({
+                        message: err
+                    });
+                });
+
+        }
     }
     return (
         <div className="add-user-form">

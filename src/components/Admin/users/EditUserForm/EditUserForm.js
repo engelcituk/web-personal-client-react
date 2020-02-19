@@ -23,8 +23,7 @@ export default function EditUserForm(props){
             email: user.email,
             role: user.role,
             avatar: user.avatar,
-            password: "",
-            repeatPassword:""
+            
         })  
     },[user])
 
@@ -79,6 +78,8 @@ export default function EditUserForm(props){
                     });
                     setIsVisibleModal(false);//oculto el modal
                     setReloadUsers(true); // se recarga la lista con el cambio
+                    setUserData({});
+
                 });
             })
         }else {
@@ -88,7 +89,7 @@ export default function EditUserForm(props){
                 });
                 setIsVisibleModal(false);//oculto el modal
                 setReloadUsers(true);// se recarga la lista con el cambio
-
+                setUserData({});
             });
         }
     }

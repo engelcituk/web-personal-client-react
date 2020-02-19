@@ -214,7 +214,6 @@ export function signUpAdminApi(token, data) {
         body: JSON.stringify(data)
 
     }
-
     return fetch(url, params)
         .then(response => {
             return response.json();
