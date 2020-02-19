@@ -3,6 +3,8 @@ import { Switch,List, Avatar, Button, Icon, notification, Modal as ModalAntd} fr
 import NoAvatar from '../../../../assets/img/png/no-avatar.png';
 import Modal from '../../../modal'; // se importa componente modal
 import EditUserForm from '../EditUserForm'; // se importa componente formulario de edicion de usuarios
+import AddUserForm from '../AddUserForm'; // se importa componente formulario de creacion de usuarios
+
 import {getAvatarApi, activateUserApi, deleteUserApi } from '../../../../api/user';
 import {getAccessTokenApi} from '../../../../api/auth';
 import './ListUsers.scss';
@@ -22,10 +24,8 @@ export default function ListUsers(props){
         setIsVisibleModal(true);
         setModalTitle("Creando nuevo Usuario");
         setModalContent(
-            <div>
-                <h1>hola</h1>
-            </div>
-        );
+            <AddUserForm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers}/>
+        )
     }
 
     return (
