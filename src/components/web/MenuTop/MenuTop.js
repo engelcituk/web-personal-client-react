@@ -4,6 +4,7 @@ import { Menu} from 'antd';
 import {Link} from 'react-router-dom';
 import {getMenuApi} from './../../../api/menu'
 import Logo from '../../../assets/img/png/logo-white.png'
+import SocialLinks from '../SocialLinks';
 
 
 export default function MenuTop() {
@@ -44,9 +45,7 @@ export default function MenuTop() {
             })
           }
         
-          <div>
-              social media
-          </div>
+        <SocialLinks/>
       </Menu>
     )
 } 
