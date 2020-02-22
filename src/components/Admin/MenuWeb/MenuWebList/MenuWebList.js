@@ -7,7 +7,7 @@ import {getAccessTokenApi} from '../../../../api/auth';
 import {updateMenuApi,activateMenuApi} from '../../../../api/menu';
 import AddMenuWebForm from '../AddMenuWebForm'
 
-const {confirm} =ModalAntd;
+const {confirm} = ModalAntd;
 
 export default function MenuWebList(props){
   const {menu, setReloadMenuWeb} = props;
@@ -51,7 +51,10 @@ export default function MenuWebList(props){
       setIsVisibleModal(true);
       setModalTitle("Creando nuevo menú");
       setModalContent(
-          <AddMenuWebForm/>
+          <AddMenuWebForm
+            setIsVisibleModal = {setIsVisibleModal}
+            setReloadMenuWeb = {setReloadMenuWeb}
+          />
       );
   }
 
