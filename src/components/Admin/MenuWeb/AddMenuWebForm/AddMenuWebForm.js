@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Form, Input, Button, Icon, Select, notification } from 'antd';
 import './AddMenuWebForm.scss';
 import {addMenuApi} from '../../../../api/menu';
