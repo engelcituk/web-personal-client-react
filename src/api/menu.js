@@ -32,7 +32,7 @@ export function updateMenuApi(token, menuId, data) {
             return response.json();
         })
         .then(result => {
-            return result;
+            return result.message;
         })
         .catch(err => {
             return err.message;
