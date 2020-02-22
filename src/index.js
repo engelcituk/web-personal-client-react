@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import './index.css';
-import './App.scss';
+import './index.scss';
 
 import App from './App';
 import * as serviceWorker from './serviceWorker';
