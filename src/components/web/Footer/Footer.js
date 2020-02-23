@@ -1,8 +1,7 @@
 import React from 'react'
 import './Footer.scss';
 import { Layout, Row, Col} from 'antd';
-import {Link} from 'react-router-dom';
-
+import MyInfo from './MyInfo'
 
 export default function Footer() {
     const {Footer} = Layout;
@@ -11,7 +10,9 @@ export default function Footer() {
              <Col lg={4}/>
              <Col lg={16}>
                 <Row>
-                    <Col md={8}> Mi informacion</Col>
+                    <Col md={8}>
+                        <MyInfo/>
+                    </Col>
                     <Col md={8}>Navegación </Col>
                     <Col md={8}>Newslater</Col>
                 </Row>

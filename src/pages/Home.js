@@ -10,7 +10,7 @@ export default function Home(){
          <>
              <MainBanner/>
              <HomeCourses/>
-             <HowMyCoursesWork/>
+             <HowMyCoursesWork/> 
              <ReviewCourses/>
          </>
     )

@@ -13,7 +13,7 @@ export default function HomeCourses() {
             </Col>
             <Col lg={4}></Col>
             <Col lg={16}>
-                <Row className="row-courses">
+                <Row className="row-courses"> 
                     <Col md={6}>
                         <CardCourse 
                             image="https://i.udemycdn.com/course/240x135/2048151_1c32_2.jpg"
