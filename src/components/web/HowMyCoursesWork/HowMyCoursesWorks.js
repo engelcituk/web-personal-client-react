@@ -1,6 +1,6 @@
 import React from 'react';
 import './HowMyCoursesWorks.scss';
-import { Row, Col, Card,Button, Icon} from 'antd';
+import { Row, Col, Card, Icon} from 'antd';
 
 
 
@@ -31,7 +31,7 @@ export default function HowMyCoursesWorks() {
                     <Col md={8}>
                         <CardInfo
                             icon="message"
-                            title="Cursos y clases"
+                            title="Aprendizaje colaborativo"
                             description="Cursos de entre 10-30 hrs"
                         />
                     </Col>

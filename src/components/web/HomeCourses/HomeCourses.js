@@ -1,12 +1,7 @@
 import React from 'react';
 import { Row, Col, Card,Button} from 'antd';
 import {Link} from 'react-router-dom';
-import reactHooks from '../../../assets/img/jpg/react-hooks.jpg';
-import cssGrid from '../../../assets/img/jpg/css-grid.jpg';
-import javascript from '../../../assets/img/jpg/javascript.jpg';
-import prestashop from '../../../assets/img/jpg/prestashop.jpg';
-import reactNative from '../../../assets/img/jpg/react-native.jpg';
-import wordpress from '../../../assets/img/jpg/wordpress.jpg';
+
 
 import "./HomeCourses.scss";
 
