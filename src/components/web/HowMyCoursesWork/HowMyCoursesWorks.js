@@ -15,7 +15,46 @@ export default function HowMyCoursesWorks() {
             <Col lg={16}>
                 <Row className="row-cards">
                     <Col md={8}>
-
+                        <CardInfo
+                            icon="clock-circle"
+                            title="Cursos y clases"
+                            description="Cursos de entre 10-30 hrs"
+                        />
+                    </Col>
+                    <Col md={8}>
+                        <CardInfo
+                            icon="key"
+                            title="Acceso 24/7"
+                            description="Cursos de entre 10-30 hrs"
+                        />
+                    </Col>
+                    <Col md={8}>
+                        <CardInfo
+                            icon="message"
+                            title="Cursos y clases"
+                            description="Cursos de entre 10-30 hrs"
+                        />
+                    </Col>
+                    <Col md={8}>
+                        <CardInfo
+                            icon="user"
+                            title="Mejora tu perfil profesional"
+                            description="Cursos de entre 10-30 hrs"
+                        />
+                    </Col>
+                    <Col md={8}>
+                        <CardInfo
+                            icon="dollar"
+                            title="Precios accesibles"
+                            description="Cursos de entre 10-30 hrs"
+                        />
+                    </Col>
+                    <Col md={8}>
+                        <CardInfo
+                            icon="check-circle"
+                            title="Certificados de finalización"
+                            description="Cursos de entre 10-30 hrs"
+                        />
                     </Col>
                 </Row>
             </Col>
@@ -27,7 +66,13 @@ export default function HowMyCoursesWorks() {
 }
 
 function CardInfo(props){
-    const {icon, title, subtitle}= props;
+    const {icon, title, description}= props;
     const {Meta}= Card;
 
+    return(
+        <Card className="how-my-courses-work__card">
+            <Icon type={icon}/>
+            <Meta title={title} description={description}/>
+        </Card>
+    )
 }
