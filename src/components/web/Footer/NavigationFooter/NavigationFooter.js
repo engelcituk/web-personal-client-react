@@ -8,7 +8,7 @@ export default function NavigationFooter() {
     return (
         <Row className="navigation-footer">
             <Col>
-            <h3>NAvebacion</h3>
+            <h3>Navegación</h3>
             </Col>
             <Col md={12}>
                 <RenderListLeft/>
