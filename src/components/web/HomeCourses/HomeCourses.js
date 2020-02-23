@@ -14,7 +14,7 @@ export default function HomeCourses() {
     return (
         <Row className="home-courses">
             <Col lg={24} className="home-courses__title">
-                <h2>Cursos con el que aprendo y mejoro mis habilidades</h2>
+                <h2>Cursos que he llevado y continúo aprendiendo <br/>para mejorar mis habilidades</h2>
             </Col>
             <Col lg={4}></Col>
             <Col lg={16}>
@@ -22,7 +22,7 @@ export default function HomeCourses() {
                     <Col md={6}>
                         <CardCourse 
                             image="https://i.udemycdn.com/course/240x135/2048151_1c32_2.jpg"
-                            title="Vue js 2 Completo ¡De 0 a Experto! + Firebase + Node [MEVN]"
+                            title="Vue js 2 Fullstack MEVN"
                             subtitle="Vue.js 2 Aprende con la práctica, descubriendo Vuex, Rutas protegidas, Vue CLI 3 UI, Nuxt.js, Node.js, Express y MongoDB"
                             link="https://www.udemy.com/course/curso-vue/"
                         />
@@ -30,8 +30,8 @@ export default function HomeCourses() {
                     <Col md={6}>
                         <CardCourse 
                             image="https://i.udemycdn.com/course/240x135/2264768_a446.jpg"
-                            title="Desarrollo Full Stack, creando una web personal con el Stack MERN (MongoDB, Express, React y Node) la ultima tecnología."
-                            subtitle="Desarrollo Full Stack, creando una web personal con el Stack MERN (MongoDB, Express, React y Node) la ultima tecnología." 
+                            title="Desarrollo Full Stack MERN "
+                            subtitle="Desarrollo Full Stack, creando una web personal con el Stack MERN (MongoDB, Express, React y Node)." 
                             link="https://www.udemy.com/course/web-personal-mern-full-stack-mongodb-express-react-node/"
                         />
                     </Col>
@@ -70,8 +70,15 @@ export default function HomeCourses() {
                 </Row>
             </Col>
             <Col lg={4}></Col>
-
+            <Col lg={24} className="home-courses__more">
+                <Link to="/courses">
+                    <Button>
+                        Ver más
+                    </Button>
+                </Link>
+            </Col>
         </Row>
+
     )
 }
 

@@ -12,7 +12,7 @@ export default function MainBanner() {
           <Row>
             <Col lg={4}/>
             <Col lg={16}>
-              <h2>Estoy aprendiendo <br/> nuevas tecnologías de desarrollo</h2>
+              <h2>Aprendo y sigo <br/> mejorando en estas tecnologías de desarrollo</h2>
               <h3>  A través de cursos practicos, concisos y actualizados, creados por <br/> profesores de renombre en la comunidad de desarrollo</h3>
             
             </Col>
