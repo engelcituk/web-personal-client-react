@@ -1,15 +1,15 @@
 import React from 'react'
 import {Route,Switch} from 'react-router-dom'
-import {Layout, Row, Col} from 'antd';
-import MenuTop from '../components/web/MenuTop'
+import { Row, Col} from 'antd';
+import MenuTop from '../components/web/MenuTop';
+import Footer from '../components/web/Footer'
 
 import './LayoutBasic.scss';
 
 
 export default function LayoutBasic(props){
     const {routes} = props;
-    const { Footer} = Layout;
-
+   
     return (
         <>
             <Row>
@@ -24,9 +24,7 @@ export default function LayoutBasic(props){
             <LoadRoutes
             routes={routes}
             />
-            <Footer>
-                Cituk caamal
-            </Footer>
+            <Footer/>
             </>
     )
 }
