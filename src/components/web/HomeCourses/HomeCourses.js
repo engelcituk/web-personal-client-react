@@ -82,7 +82,7 @@ function CardCourse(props){
     const {Meta} = Card;
 
     return (
-        <a href={link} target="_blank" without rel="noopener noreferrer">
+        <a href={link} target="_blank" rel="noopener noreferrer">
             <Card
                 className="home-courses__card"
                 cover={<img src={image} alt={title} /> }

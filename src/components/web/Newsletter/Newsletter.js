@@ -1,11 +1,37 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Newsletter.scss';
 import { Form, Icon, Input, Button, notification} from 'antd';
+import {suscribeNewsletterApi} from '../../../api/newsletter';
 
 
 export default function Newsletter() {
-    const onSubmit= () => {
-        console.log('newsletter enviado');
+
+    const [email, setEmail] = useState("");
+
+    const onSubmit= (e) => {
+        e.preventDefault();
+        const emailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.([a-zA-Z]{2,4})+$/; //pattern email
+
+        const resultValidation = emailValid.test(email);
+        if(!resultValidation){
+            notification["error"]({
+                message: "El correo electrónico no es valido"
+            })
+        }else{
+            suscribeNewsletterApi(email).then( response => {
+                if(response.code !== 200){
+                    notification["warning"]({
+                        message: response.message
+                    })
+                }else{
+                    notification["success"]({
+                        message: response.message
+                    }) ;
+                    setEmail("");
+                }
+            })   
+        }
+
     }
     return (
         <div className="newsletter">
@@ -13,14 +39,15 @@ export default function Newsletter() {
             <Form onSubmit={onSubmit}>
                 <Form.Item>
                     <Input
-                        prefix={<Icon type="user" style={{color:"rgba(0,0,0,0.5)"}}/>}
+                      
+                        prefix={<Icon type="mail" style={{color:"rgba(0,0,0,0.5)"}}/>}
                         placeholder="Correo electrónico"
-                        //value=""
-                        //onChange={}
+                        value={email}
+                        onChange={e => setEmail(e.target.value) }
                     />
                 </Form.Item>
                 <Form.Item>
-                    <Button type="primary" htmlType="submit" classname="login-form-button">
+                    <Button type="primary" htmlType="submit" className="login-form-button">
                         Me suscribo
                     </Button>
                 </Form.Item>
