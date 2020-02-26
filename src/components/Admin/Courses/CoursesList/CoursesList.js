@@ -1,9 +1,10 @@
 import React , {useState, useEffect} from 'react';
 import './CoursesList.scss';
-import {getCourseDataUdemyApi} from '../../../../api/course';
+import {getCourseDataUdemyApi, deleteCourseApi} from '../../../../api/course';
 import { List, Button,Icon, Modal as ModalAntd, notification } from 'antd';
 import DragSortableList from 'react-drag-sortable';
 import Modal from '../../../modal';
+import {getAccessTokenApi} from '../../../../api/auth';
 
 const { confirm } = ModalAntd;
 
@@ -21,7 +22,7 @@ export default function CoursesList(props) {
                 content:(
                     <Course
                         course={course}
-
+                        deleteCourse={deleteCourse}
                     />
                 )
             });
@@ -31,15 +32,32 @@ export default function CoursesList(props) {
 
     const onSort = (sortedList, dropEvent) => { 
         console.log(sortedList)
-
     }
-    if(courses.length > 0){
-        courses.forEach(course => {
-            getCourseDataUdemyApi(course.idCourse).then( response => {
-                console.log(response)
-            }) 
-        });
 
+    const deleteCourse = (course) => {
+        const accessToken = getAccessTokenApi();
+        confirm({
+            title: "Eliminando curso",
+            content: `¿Estas seguro de eliminar a ${course.idCourse} ?`,
+            okText: "Eliminar",
+            okType: "danger",
+            cancelText: "Cancelar",
+            onOk(){ 
+                deleteCourseApi(accessToken, course._id)
+                    .then( response => {
+                        const typeNotification = response.code === 200 ? "success" : "warning";
+                        notification[typeNotification]({
+                            message: response
+                        });
+                        setReloadCourses(true)
+                    })
+                    .catch( err => {
+                        notification["error"]({
+                            message: "Error del servidor intentalo más tarde"
+                    })
+                })
+            }
+        });
     }
     return (
         <div className="courses-list">
@@ -60,7 +78,7 @@ export default function CoursesList(props) {
 }
 
 function Course(props){
-    const {course} = props;
+    const {course ,deleteCourse} = props;
     const [courseData, setCoursedata]= useState(null)
 
     useEffect(() =>{
@@ -83,7 +101,7 @@ function Course(props){
                 <Button type="primary" onClick={ ()=> console.log('editar curso')}>
                     <Icon type="edit"/>
                 </Button>,
-                <Button type="danger" onClick={ ()=> console.log('eliminar curso')}>
+                <Button type="danger" onClick={ () => deleteCourse(course)}>
                     <Icon type="delete"/>
                 </Button>
             ]}

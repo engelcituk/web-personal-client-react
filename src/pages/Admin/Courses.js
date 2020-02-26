@@ -1,8 +1,6 @@
 import React , {useState, useEffect} from 'react';
 import CoursesList from '../../components/Admin/Courses/CoursesList';
 import {getCoursesApi} from '../../api/course';
-import {getAccessTokenApi} from '../../api/auth';
-
 
 
 export default function Courses(){

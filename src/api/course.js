@@ -100,6 +100,6 @@ export function deleteCourseApi(token, courseId) {
             return result.message;
         })
         .catch(err => {
-            console.log(err.message);
+            return err;
         })
 }
