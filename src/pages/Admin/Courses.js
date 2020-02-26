@@ -17,7 +17,6 @@ export default function Courses(){
      }, [reloadCourses])
     return (
          <div className="courses">
-             <h1>Estamos en el courses</h1>
              <CoursesList courses={courses} setReloadCourses={setReloadCourses}/>
          </div>
     )

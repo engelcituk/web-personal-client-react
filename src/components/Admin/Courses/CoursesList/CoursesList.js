@@ -61,8 +61,43 @@ export default function CoursesList(props) {
 
 function Course(props){
     const {course} = props;
+    const [courseData, setCoursedata]= useState(null)
 
+    useEffect(() =>{
+        getCourseDataUdemyApi(course.idCourse).then( response => {
+            if(response.code !== 200){
+                notification["warning"]({
+                    message: `El curso con el id ${course.idCourse} no se ha encontrado.`
+                })
+            }
+            setCoursedata(response.data)
+        })
+    },[course])
+
+    if(!courseData){
+        return null;
+    }
     return(
-        <h1>hola mundo</h1>
+        <List.Item
+            actions={[
+                <Button type="primary" onClick={ ()=> console.log('editar curso')}>
+                    <Icon type="edit"/>
+                </Button>,
+                <Button type="danger" onClick={ ()=> console.log('eliminar curso')}>
+                    <Icon type="delete"/>
+                </Button>
+            ]}
+        >
+            <img
+                src= {courseData.image_480x270}
+                alt={courseData.title}
+                style={{ width:"100px",marginRight:"20px"}}
+            />
+            <List.Item.Meta
+                title={`${courseData.title} | ID ${course.idCourse}`}
+                description={courseData.headline}
+            />
+        </List.Item>
+       
     )
 }
