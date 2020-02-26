@@ -47,7 +47,7 @@ export default function CoursesList(props) {
                     .then( response => {
                         const typeNotification = response.code === 200 ? "success" : "warning";
                         notification[typeNotification]({
-                            message: response
+                            message: response.message
                         });
                         setReloadCourses(true)
                     })

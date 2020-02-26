@@ -97,7 +97,7 @@ export function deleteCourseApi(token, courseId) {
             return response.json();
         })
         .then(result => {
-            return result.message;
+            return result;
         })
         .catch(err => {
             return err;
