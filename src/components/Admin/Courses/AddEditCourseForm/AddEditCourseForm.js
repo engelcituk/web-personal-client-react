@@ -1,32 +1,72 @@
 import React , {useState, useEffect} from 'react';
 import { Form,Icon, Input, Button, notification } from 'antd';
 import {getAccessTokenApi} from '../../../../api/auth';
- 
+import {addCourseApi} from '../../../../api/course';
+
 
 import './AddEditCourseForm.scss';
 
 export default function AddEditCourseForm(props) {
     const {setIsVisibleModal, setReloadCourses, course}=props;
-    const [courseData,setCouseData]= useState({});
+    const [courseData,setCourseData]= useState({});
+
+    const addCourse = (e) =>{
+        e.preventDefault();
+       
+        if(!courseData.idCourse){
+            notification["error"]({
+                message: `El id del curso es obligatorio.`
+            })
+        }else {
+            const accessToken = getAccessTokenApi();
+            addCourseApi(accessToken,courseData).then( response => {
+                const typeNotification = response.code === 200 ? "success":"warning";
+                notification[typeNotification]({
+                    message: response.message
+                });
+                setIsVisibleModal(false);
+                setReloadCourses(true);
+                setCourseData({});
+            }).catch( err=> {
+                notification["error"]({
+                    message: "Error del servidor, intentelo más tarde"
+                });
+            })
+
+
+        }
+    }
+    const updateCourse = (e) =>{
+        e.preventDefault();
+        console.log('actualizando curso');
+    }
+    
+    
     return (
         <div className="add-edit-course-form">
             <AddEditForm
                 course={course}
+                addCourse={addCourse}
+                updateCourse={updateCourse}
+                courseData={courseData}
+                setCourseData={setCourseData}
             />
         </div>
     )
 }
 function AddEditForm(props){
-    const {course}=props;
+    const {course, addCourse,updateCourse,courseData,setCourseData}=props;
 
     return(
-        <Form className="form-add-edit" onSubmit={() => console.log('submit form')}>
+        <Form className="form-add-edit" onSubmit={ course ? updateCourse : addCourse}>
             <Form.Item>
                 <Input
                     prefix={<Icon type="key" />}
                     placeholder="Id del curso"
-                    //onChange={inputValidation}
-                    //value={inputs.email}
+                    value={courseData.idCourse}
+                    onChange={  
+                        e =>  setCourseData({...courseData, idCourse: e.target.value})
+                    }
                     disabled={course ? true: false}
 
                 />
@@ -35,40 +75,30 @@ function AddEditForm(props){
                 <Input
                     prefix={<Icon type="link" />}
                     placeholder="Url del curso"
-                    //onChange={inputValidation}
-                    //value={inputs.email}
-                    disabled={course ? true: false}
-
+                    value={courseData.link}
+                    onChange={  
+                        e =>  setCourseData({...courseData, link: e.target.value})
+                    }
                 />
             </Form.Item>
             <Form.Item>
                 <Input
-                    prefix=
-                        {
-                            <Icon
-                                type="gift"
-                                disabled={course ? true: false}
-                            />
-                        }
+                    prefix={ <Icon type="gift" />}
                     placeholder="Cupón de descuento"
-                    
-                    //onChange={inputValidation}
-                    //value={inputs.email}
+                    value={courseData.coupon}
+                    onChange={  
+                        e =>  setCourseData({...courseData, coupon: e.target.value})
+                    }
                 />
             </Form.Item>
             <Form.Item>
                 <Input
-                    prefix=
-                        {
-                            <Icon
-                                type="dollar"
-                                disabled={course ? true: false}
-                            />
-                        }
+                    prefix={ <Icon type="dollar" /> }
                     placeholder="Precio del curso"
-                    
-                    //onChange={inputValidation}
-                    //value={inputs.email}
+                    value={courseData.price}
+                    onChange={  
+                        e =>  setCourseData({...courseData, price: e.target.value})
+                    }
                 />
             </Form.Item>
             <Form.Item>

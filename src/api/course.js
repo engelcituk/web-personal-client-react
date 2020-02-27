@@ -55,8 +55,6 @@ export function updateCourseApi(token, courseId, data) {
         })
 }
 
-
-
 export function addCourseApi(token, course) {
     const url = `${basePath}/${apiVersion}/course`;
 
@@ -74,10 +72,10 @@ export function addCourseApi(token, course) {
             return response.json();
         })
         .then(result => {
-            return result.message;
+            return result;
         })
         .catch(err => {
-            console.log(err.message);
+           return  err;
         })
 }
 
