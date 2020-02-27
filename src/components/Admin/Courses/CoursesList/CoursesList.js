@@ -3,7 +3,9 @@ import './CoursesList.scss';
 import {getCourseDataUdemyApi, deleteCourseApi} from '../../../../api/course';
 import { List, Button,Icon, Modal as ModalAntd, notification } from 'antd';
 import DragSortableList from 'react-drag-sortable';
+
 import Modal from '../../../modal';
+import AddEditCourseForm from '../AddEditCourseForm';//modal para crear curso
 import {getAccessTokenApi} from '../../../../api/auth';
 
 const { confirm } = ModalAntd;
@@ -28,12 +30,22 @@ export default function CoursesList(props) {
             });
         });
         setListCourses(listCoursesArray);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[courses])
 
     const onSort = (sortedList, dropEvent) => { 
         console.log(sortedList)
     }
-
+    const addCourseModal = () => {
+        setIsVisibleModal(true);
+        setModalTitle("Creando nuevo curso");
+        setModalContent(
+            <AddEditCourseForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadCourses={setReloadCourses}
+            />
+        )
+    }
     const deleteCourse = (course) => {
         const accessToken = getAccessTokenApi();
         confirm({
@@ -62,7 +74,7 @@ export default function CoursesList(props) {
     return (
         <div className="courses-list">
             <div className="courses-list__header">
-                <Button type="primary" onClick={ ()=> console.log('eueud')}>Nuevo curso</Button>
+                <Button type="primary" onClick={addCourseModal}>Nuevo curso</Button>
             </div>
 
             <div className="courses-list__items">
@@ -73,6 +85,13 @@ export default function CoursesList(props) {
             )}
             <DragSortableList items={listCourses} onSort={onSort} type="vertical"/>
             </div>
+            <Modal
+                title={modalTitle}
+                isVisible={isVisibleModal}
+                setIsVisible={setIsVisibleModal}
+            >
+                {modalContent}
+            </Modal>
         </div>
     )
 }
