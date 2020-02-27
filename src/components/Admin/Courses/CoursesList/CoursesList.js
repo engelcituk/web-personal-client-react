@@ -1,6 +1,6 @@
 import React , {useState, useEffect} from 'react';
 import './CoursesList.scss';
-import {getCourseDataUdemyApi, deleteCourseApi} from '../../../../api/course';
+import {getCourseDataUdemyApi, updateCourseApi, deleteCourseApi} from '../../../../api/course';
 import { List, Button,Icon, Modal as ModalAntd, notification } from 'antd';
 import DragSortableList from 'react-drag-sortable';
 
@@ -35,7 +35,12 @@ export default function CoursesList(props) {
     },[courses])
 
     const onSort = (sortedList, dropEvent) => { 
-        console.log(sortedList)
+        const accessToken = getAccessTokenApi();
+        sortedList.forEach( item => {
+            const {_id } = item.content.props.course;
+            const order = item.rank;
+            updateCourseApi(accessToken, _id,{order});
+        })
     }
     const addCourseModal = () => {
         setIsVisibleModal(true);
