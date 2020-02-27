@@ -1,7 +1,7 @@
 import React , {useState, useEffect} from 'react';
 import { Form,Icon, Input, Button, notification } from 'antd';
 import {getAccessTokenApi} from '../../../../api/auth';
-import {addCourseApi} from '../../../../api/course';
+import {addCourseApi, updateCourseApi} from '../../../../api/course';
 
 
 import './AddEditCourseForm.scss';
@@ -9,6 +9,10 @@ import './AddEditCourseForm.scss';
 export default function AddEditCourseForm(props) {
     const {setIsVisibleModal, setReloadCourses, course}=props;
     const [courseData,setCourseData]= useState({});
+
+    useEffect(() =>{
+        course && setCourseData(course) // if(course){}  ->resumido
+    },[course])
 
     const addCourse = (e) =>{
         e.preventDefault();
@@ -20,7 +24,7 @@ export default function AddEditCourseForm(props) {
         }else {
             const accessToken = getAccessTokenApi();
             addCourseApi(accessToken,courseData).then( response => {
-                const typeNotification = response.code === 200 ? "success":"warning";
+                const typeNotification = response.code === 200 ? "success" : "warning";
                 notification[typeNotification]({
                     message: response.message
                 });
@@ -38,7 +42,22 @@ export default function AddEditCourseForm(props) {
     }
     const updateCourse = (e) =>{
         e.preventDefault();
-        console.log('actualizando curso');
+        const accessToken = getAccessTokenApi();
+        
+        updateCourseApi(accessToken,course._id,courseData)
+            .then( response => {
+                const typeNotification = response.code === 200 ? "success" : "warning";
+                notification[typeNotification]({
+                    message: response.message
+                });
+                setIsVisibleModal(false);
+                setReloadCourses(true);
+                setCourseData({});
+        }).catch( err=> {
+            notification["error"]({
+                message: "Error del servidor, intentelo más tarde"
+            });
+        })
     }
     
     

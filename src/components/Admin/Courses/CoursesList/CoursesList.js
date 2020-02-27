@@ -25,6 +25,7 @@ export default function CoursesList(props) {
                     <Course
                         course={course}
                         deleteCourse={deleteCourse}
+                        editCourseModal={editCourseModal}
                     />
                 )
             });
@@ -46,6 +47,17 @@ export default function CoursesList(props) {
             />
         )
     }
+    const editCourseModal = course => {
+        setIsVisibleModal(true);
+        setModalTitle("Actualizando curso");
+        setModalContent(
+            <AddEditCourseForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadCourses={setReloadCourses}
+                course={course}
+            />
+        )
+    }   
     const deleteCourse = (course) => {
         const accessToken = getAccessTokenApi();
         confirm({
@@ -97,7 +109,7 @@ export default function CoursesList(props) {
 }
 
 function Course(props){
-    const {course ,deleteCourse} = props;
+    const {course ,deleteCourse, editCourseModal} = props;
     const [courseData, setCoursedata]= useState(null)
 
     useEffect(() =>{
@@ -117,7 +129,7 @@ function Course(props){
     return(
         <List.Item
             actions={[
-                <Button type="primary" onClick={ ()=> console.log('editar curso')}>
+                <Button type="primary" onClick={ ()=> editCourseModal(course)}>
                     <Icon type="edit"/>
                 </Button>,
                 <Button type="danger" onClick={ () => deleteCourse(course)}>
