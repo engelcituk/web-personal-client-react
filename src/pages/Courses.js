@@ -6,13 +6,42 @@ import {getCoursesApi} from '../api/course';
 import { from } from 'rxjs';
 
 export default function Home(){
+     const [courses, setCourses] = useState(null);
+     console.log(courses)
+     useEffect(() =>{
+        getCoursesApi()
+            .then(response => {
+                if (response.code !==200 ) {
+                notification["warning"]({
+                    message: response.message
+                })
+            }else{
+                setCourses(response.courses)
+            }
+        })
+        .catch( (err) => {
+            notification["warning"]({
+                message: "Error del servidor, intentelo más tarde"                
+            })
+        })
+    },[])
     return (
         <Row>
             <Col md={4}/>
             <Col md={16}>
                 <PresentationCourses/>
-                
-                <CoursesList/>
+                {!courses ? (
+                    <Spin 
+                        tip="Cargando cursos" 
+                        style={{textAlign:"center", 
+                        width:"100%", 
+                        padding:"20px"}}
+                        />
+                ):
+                (
+                    <CoursesList courses={courses}/>
+                )
+                }
             </Col>
             <Col md={4}/>
 
