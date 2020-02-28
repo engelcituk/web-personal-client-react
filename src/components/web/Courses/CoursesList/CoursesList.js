@@ -22,6 +22,8 @@ export default function CoursesList(props) {
 function Course(props){
     const {course}=props;
     const  [courseInfo, setCourseInfo] = useState({});
+    const  [urlCourse, setUrlCourse] = useState("");
+    
     const {Meta} = Card;
 
     useEffect(() => {
@@ -32,7 +34,8 @@ function Course(props){
                         message: response.message
                     })
                 }else{
-                    setCourseInfo(response.data)
+                    setCourseInfo(response.data);
+                    mountUrl(response.data.url);
                 }
 
         }).catch( ()=> {
@@ -40,10 +43,20 @@ function Course(props){
                 message: "Error del servidor, intentelo mas tarde"
             })
         })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [course])
 
+    const mountUrl = url => {
+        if(!course.link){
+            const baseUrl = `https://www.udemy.com${url}`;
+            const finalUrl = baseUrl + (course.coupon ? `?couponCode=${course.coupon}`: "");
+            setUrlCourse(finalUrl);
+        }else{
+            setUrlCourse(course.link)
+        }
+    }
     return(
-            <a href="#" target="_blank" rel="noopener noreferrer" alt="curso">
+            <a href={urlCourse} target="_blank" rel="noopener noreferrer" alt="curso">
                 <Card
                     cover={<img src={courseInfo.image_480x270} alt={courseInfo.title}/>}
                     
