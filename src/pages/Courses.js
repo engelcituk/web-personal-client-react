@@ -7,7 +7,6 @@ import { from } from 'rxjs';
 
 export default function Home(){
      const [courses, setCourses] = useState(null);
-     console.log(courses)
      useEffect(() =>{
         getCoursesApi()
             .then(response => {
