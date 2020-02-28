@@ -11,7 +11,8 @@ export default function AddEditCourseForm(props) {
     const [courseData,setCourseData]= useState({});
 
     useEffect(() =>{
-        course && setCourseData(course) // if(course){}  ->resumido
+        //course && setCourseData(course) // if(course){}  ->resumido
+        course ? setCourseData(course) : setCourseData({});
     },[course])
 
     const addCourse = (e) =>{
