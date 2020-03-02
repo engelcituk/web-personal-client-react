@@ -75,14 +75,14 @@ export function deletePostApi(token, postId) {
         }
     }
 
-    return fetch(url, params)
+    return fetch(url, params)   
         .then(response => {
             return response.json();
         })
         .then(result => {
-            return result.message;
+            return result;
         })
         .catch(err => {
-            console.log(err.message);
+            return err;
         })
 }

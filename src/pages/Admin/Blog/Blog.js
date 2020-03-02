@@ -50,7 +50,7 @@ import './Blog.scss';
                     Nuevo post
                 </Button>
             </div>
-            <PostsList posts={posts} /> {/*  listas de posts */}
+            <PostsList posts={posts} setReloadPosts={setReloadPosts}/> {/*  listas de posts */}
 
             <Pagination posts={posts} location={location} history={history} /> {/*  elementos de paginacion  */}
 
