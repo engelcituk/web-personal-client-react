@@ -5,7 +5,9 @@ import { withRouter } from  'react-router-dom';
 import Modal from '../../../components/modal';
 import {getAccessTokenApi} from '../../../api/auth';
 import {getPostsApi} from '../../../api/post';
-import  PostsList  from '../../../components/Admin/Blog/PostsList'
+import  PostsList  from '../../../components/Admin/Blog/PostsList';
+import  Pagination  from '../../../components/Pagination'
+
 
 import './Blog.scss';
 
@@ -37,7 +39,7 @@ import './Blog.scss';
         })
         setReloadPosts(false);
     },[page,reloadPosts]);
-    
+
      if(!posts){
          return null;
      }
@@ -48,8 +50,10 @@ import './Blog.scss';
                     Nuevo post
                 </Button>
             </div>
-            <PostsList posts={posts} />
-            <h2>paginacion de nuestros posts</h2>
+            <PostsList posts={posts} /> {/*  listas de posts */}
+
+            <Pagination posts={posts} location={location} history={history} /> {/*  elementos de paginacion  */}
+
             <Modal
                 title={modalTitle}
                 isVisible={isVisibleModal}

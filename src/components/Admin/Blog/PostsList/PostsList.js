@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from  'react-router-dom';
 import './PostsList.scss';
 import { List, Button, Icon, Modal, notification } from 'antd';
-import { type } from 'os';
 const {confirm} = Modal;
 
 export default function PostsList(props) {
