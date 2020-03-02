@@ -1,12 +1,43 @@
 import React, {useState, useEffect} from 'react';
 import { Button, notification } from 'antd';
+import queryString from 'query-string';
+import { withRouter } from  'react-router-dom';
 import Modal from '../../../components/modal';
+import {getAccessTokenApi} from '../../../api/auth';
+import {getPostsApi} from '../../../api/post';
+
 import './Blog.scss';
 
-export default function Blog() {
+ function Blog(props) {
+    const {location,history} = props;
+    const [posts, setPosts]= useState(null);
+    const [reloadPosts, setReloadPosts]= useState(false);
     const [isVisibleModal, setIsVisibleModal]= useState(false);
     const [modalTitle, setModalTitle]= useState("");
     const [modalContent, setModalContent]= useState(null);
+    const { page=1 }= queryString.parse(location.search);
+
+    console.log(posts);
+
+    useEffect(()=>{
+        getPostsApi(12, page)
+        .then( response => {
+            if(response.code !== 200){
+                notification["error"]({
+                    message: response.message
+                });
+            }else {
+                setPosts(response.posts)
+            }
+        })
+        .catch( err => {
+            notification["error"]({
+                message: "Error del servidor, intentelo más tarde"
+            });
+
+        })
+        setReloadPosts(false);
+    },[page,reloadPosts])
 
     return (
         <div className="blog">
@@ -26,3 +57,5 @@ export default function Blog() {
         </div>
     )
 }
+
+export default withRouter(Blog);
