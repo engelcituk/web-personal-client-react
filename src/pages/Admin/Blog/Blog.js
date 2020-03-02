@@ -6,8 +6,8 @@ import Modal from '../../../components/modal';
 import {getAccessTokenApi} from '../../../api/auth';
 import {getPostsApi} from '../../../api/post';
 import  PostsList  from '../../../components/Admin/Blog/PostsList';
-import  Pagination  from '../../../components/Pagination'
-
+import  Pagination  from '../../../components/Pagination';
+import AddEditPostForm from '../../../components/Admin/Blog/AddEditPostForm'
 
 import './Blog.scss';
 
@@ -40,13 +40,24 @@ import './Blog.scss';
         setReloadPosts(false);
     },[page,reloadPosts]);
 
+    const addPost = post => {
+        setIsVisibleModal(true);
+        setModalTitle("Creando nueva publicación");
+        setModalContent(
+            <AddEditPostForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadPosts={setReloadPosts}
+                post={null}
+            />
+        )
+    }
      if(!posts){
          return null;
      }
     return (
         <div className="blog">
             <div className="blog__add-post">
-                <Button type="primary">
+                <Button type="primary" onClick={addPost}>
                     Nuevo post
                 </Button>
             </div>
@@ -59,7 +70,9 @@ import './Blog.scss';
                 isVisible={isVisibleModal}
                 setIsVisible={setIsVisibleModal}
                 width="75%"
-            />
+            >
+            {modalContent}
+            </Modal>
         </div>
     )
 }
