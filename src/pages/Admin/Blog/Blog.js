@@ -3,7 +3,6 @@ import { Button, notification } from 'antd';
 import queryString from 'query-string';
 import { withRouter } from  'react-router-dom';
 import Modal from '../../../components/modal';
-import {getAccessTokenApi} from '../../../api/auth';
 import {getPostsApi} from '../../../api/post';
 import  PostsList  from '../../../components/Admin/Blog/PostsList';
 import  Pagination  from '../../../components/Pagination';
