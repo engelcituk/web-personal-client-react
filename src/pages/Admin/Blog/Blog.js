@@ -5,6 +5,7 @@ import { withRouter } from  'react-router-dom';
 import Modal from '../../../components/modal';
 import {getAccessTokenApi} from '../../../api/auth';
 import {getPostsApi} from '../../../api/post';
+import  PostsList  from '../../../components/Admin/Blog/PostsList'
 
 import './Blog.scss';
 
@@ -16,8 +17,6 @@ import './Blog.scss';
     const [modalTitle, setModalTitle]= useState("");
     const [modalContent, setModalContent]= useState(null);
     const { page=1 }= queryString.parse(location.search);
-
-    console.log(posts);
 
     useEffect(()=>{
         getPostsApi(12, page)
@@ -37,8 +36,11 @@ import './Blog.scss';
 
         })
         setReloadPosts(false);
-    },[page,reloadPosts])
-
+    },[page,reloadPosts]);
+    
+     if(!posts){
+         return null;
+     }
     return (
         <div className="blog">
             <div className="blog__add-post">
@@ -46,7 +48,7 @@ import './Blog.scss';
                     Nuevo post
                 </Button>
             </div>
-            <h1>post list</h1>
+            <PostsList posts={posts} />
             <h2>paginacion de nuestros posts</h2>
             <Modal
                 title={modalTitle}
