@@ -3,6 +3,8 @@ import {Row,Col, Form,Icon, Input, Button, DatePicker, notification } from 'antd
 import moment from 'moment';
 import {Editor} from '@tinymce/tinymce-react';
 import {getAccessTokenApi} from '../../../../api/auth';
+import {addPostApi} from '../../../../api/post';
+
 
 
 import './AddEditPostForm.scss';
@@ -19,36 +21,50 @@ export default function AddEditPostForm(props) {
         }
     },[post]);
 
+    const processPost = e =>{
+        e.preventDefault();
+        if(!post){
+            console.log('crando post')
+            console.log(postData)
+
+        }else{
+            console.log('editando post')
+            console.log(postData)
+
+
+        }
+    }
     return (
         <div className="add-edit-post-form">
-            <AddEditForm postData={postData} setPostData={setPostData} post={post}/>
+            <AddEditForm postData={postData} setPostData={setPostData} post={post} processPost={processPost}/>
         </div>
     )
 }
 
 function AddEditForm(props){
-    const { postData, setPostData, post} =props;
+    const { postData, setPostData, post, processPost} =props;
 
     return (
         <Form
             className="add-edit-post-form"
             layout="inline"
+            onSubmit={processPost}
         >
             <Row gutter={24}>
                 <Col span={8}>
                     <Input
                         prefix={<Icon type="font-size"/>}
                         placeholder="Título"
-                        //value={}
-                        //onChange={}
+                        value={postData.title}
+                        onChange={ e=> setPostData({...postData, title: e.target.value})}
                     />
                 </Col>
                 <Col span={8}>
                     <Input
                         prefix={<Icon type="link"/>}
                         placeholder="Url"
-                        //value={}
-                        //onChange={}
+                        value={postData.url}
+                        onChange={ e=> setPostData({...postData, url: tranformTextToUrl(e.target.value)})}
                     />
                 </Col>
                 <Col span={8}>
@@ -57,8 +73,13 @@ function AddEditForm(props){
                         forma="DD/MM/YY HH:mm:ss"
                         showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
                         placeholder="Fecha de publicación"
-                        //value={}
-                        //onChange={}
+                        value={ postData.date && moment(postData.date)}
+                        onChange={ (e, value) => 
+                                    setPostData({
+                                        ...postData,
+                                        date: moment(value,"")
+                                    
+                                }) }
                     />
                 </Col>
             </Row>
@@ -84,4 +105,9 @@ function AddEditForm(props){
             </Button>
         </Form>
     )
+}
+
+function tranformTextToUrl(text){
+    const url = text.replace(" ","-");
+    return url.toLowerCase();
 }

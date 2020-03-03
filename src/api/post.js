@@ -57,10 +57,10 @@ export function addPostApi(token, post) {
             return response.json();
         })
         .then(result => {
-            return result.message;
+            return result;
         })
         .catch(err => {
-            console.log(err.message);
+            return err;
         })
 }
 
