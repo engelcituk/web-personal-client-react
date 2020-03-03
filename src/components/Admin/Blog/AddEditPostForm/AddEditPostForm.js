@@ -3,7 +3,7 @@ import {Row,Col, Form,Icon, Input, Button, DatePicker, notification } from 'antd
 import moment from 'moment';
 import {Editor} from '@tinymce/tinymce-react';
 import {getAccessTokenApi} from '../../../../api/auth';
-import {addPostApi} from '../../../../api/post';
+import {addPostApi, updatePostApi} from '../../../../api/post';
 
 
 
@@ -34,8 +34,7 @@ export default function AddEditPostForm(props) {
                 addPost();
     
             }else{
-                console.log('editando post')
-                console.log(postData)    
+                updatePost();   
             }
         }
     }
@@ -55,8 +54,25 @@ export default function AddEditPostForm(props) {
                 message: "Error del servidor, intentelo más tarde"
             });
         })
-
     }
+
+    const updatePost = () => {
+        const token = getAccessTokenApi();
+        updatePostApi(token, post._id, postData).then( response => {
+            const typeNotification = response.code === 200 ? "success" : "warning";
+                notification[typeNotification]({
+                    message: response.message
+                });
+                setIsVisibleModal(false);
+                setReloadPosts(true);
+                setPostData ({});
+        }).catch( err=> {
+            notification["error"]({
+                message: "Error del servidor, intentelo más tarde"
+            });
+        })
+    }
+  
     return (
         <div className="add-edit-post-form">
             <AddEditForm postData={postData} setPostData={setPostData} post={post} processPost={processPost}/>

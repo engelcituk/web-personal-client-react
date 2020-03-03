@@ -32,10 +32,10 @@ export function updatePostApi(token, postId, data) {
             return response.json();
         })
         .then(result => {
-            return result.message;
+            return result;
         })
         .catch(err => {
-            return err.message;
+            return err;
         })
 }
 

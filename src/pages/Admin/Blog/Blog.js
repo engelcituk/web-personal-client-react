@@ -50,6 +50,19 @@ import './Blog.scss';
             />
         )
     }
+
+    const editPost = post => {
+        setIsVisibleModal(true);
+        setModalTitle("Editando publicación");
+        setModalContent(
+            <AddEditPostForm
+                setIsVisibleModal={setIsVisibleModal}
+                setReloadPosts={setReloadPosts}
+                post={post}
+            />
+        )
+        
+    }
      if(!posts){
          return null;
      }
@@ -60,7 +73,7 @@ import './Blog.scss';
                     Nuevo post
                 </Button>
             </div>
-            <PostsList posts={posts} setReloadPosts={setReloadPosts}/> {/*  listas de posts */}
+            <PostsList posts={posts} setReloadPosts={setReloadPosts} editPost={editPost}/> {/*  listas de posts */}
 
             <Pagination posts={posts} location={location} history={history} /> {/*  elementos de paginacion  */}
 
