@@ -23,16 +23,39 @@ export default function AddEditPostForm(props) {
 
     const processPost = e =>{
         e.preventDefault();
-        if(!post){
-            console.log('crando post')
-            console.log(postData)
+        const { title, url, date, description }= postData;
 
+        if(!title || !url || !date || !description){
+            notification["error"]({
+                message: "Todos los campos son obligatorios "
+            });
         }else{
-            console.log('editando post')
-            console.log(postData)
-
-
+            if(!post){
+                addPost();
+    
+            }else{
+                console.log('editando post')
+                console.log(postData)    
+            }
         }
+    }
+
+    const addPost = () => {
+        const token = getAccessTokenApi();
+        addPostApi(token,postData).then( response => {
+            const typeNotification = response.code === 200 ? "success" : "warning";
+                notification[typeNotification]({
+                    message: response.message
+                });
+                setIsVisibleModal(false);
+                setReloadPosts(true);
+                setPostData ({});
+        }).catch( err=> {
+            notification["error"]({
+                message: "Error del servidor, intentelo más tarde"
+            });
+        })
+
     }
     return (
         <div className="add-edit-post-form">
@@ -75,16 +98,15 @@ function AddEditForm(props){
                         placeholder="Fecha de publicación"
                         value={ postData.date && moment(postData.date)}
                         onChange={ (e, value) => 
-                                    setPostData({
-                                        ...postData,
-                                        date: moment(value,"")
-                                    
-                                }) }
+                            setPostData({
+                                ...postData,
+                                date: value //moment(value, "DD/MM/YY HH:mm:ss").toISOString()
+                            })}
                     />
                 </Col>
             </Row>
             <Editor
-                value=""
+                value={postData.description ? postData.description  : "" }
                 init={{
                 height: 400,
                 menubar: true,
@@ -98,7 +120,7 @@ function AddEditForm(props){
                     alignleft aligncenter alignright alignjustify | \
                     bullist numlist outdent indent | removeformat | help'
                 }}
-                //onEditorChange={this.handleEditorChange}
+                onChange={ e => setPostData({...postData, description: e.target.getContent()})}
             />
             <Button type="primary" htmlType="submit" className="btn-submit">
                 {post ? "Actualizar post" : "Crear post"}
