@@ -3,7 +3,7 @@ import PresentationCourses from '../components/web/Courses/PresentationCourses';
 import CoursesList from '../components/web/Courses/CoursesList';
 import { Row, Col, Spin,notification} from 'antd';
 import {getCoursesApi} from '../api/course';
-import { from } from 'rxjs';
+import { Helmet } from 'react-helmet';
 
 export default function Home(){
      const [courses, setCourses] = useState(null);
@@ -25,6 +25,10 @@ export default function Home(){
         })
     },[])
     return (
+        <>
+        <Helmet>
+            <title>Cursos que he visto</title>
+        </Helmet>
         <Row>
             <Col md={4}/>
             <Col md={16}>
@@ -43,8 +47,7 @@ export default function Home(){
                 }
             </Col>
             <Col md={4}/>
-
         </Row>
-        
+      </>  
     )
 }

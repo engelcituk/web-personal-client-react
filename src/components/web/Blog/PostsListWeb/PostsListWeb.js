@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Spin,List, notification } from 'antd';
 import {Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
+
 import moment from 'moment';
 import queryString from 'query-string';
 import Pagination from '../../../Pagination';
@@ -56,6 +58,10 @@ function Post(props){
     const month =  moment(post.date).format("MMMM");
 
     return (
+        <>
+        <Helmet>
+            <title>Blog | citukcaamal </title>
+        </Helmet>
         <List.Item className="post">
             <div className="post__date">
                 <span>{day}</span>
@@ -65,5 +71,6 @@ function Post(props){
                 <List.Item.Meta title={post.title}/>
             </Link>
         </List.Item>
+        </>
     )
 }
