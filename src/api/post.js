@@ -86,3 +86,17 @@ export function deletePostApi(token, postId) {
             return err;
         })
 }
+export function getPostApi(urlpost) {
+    const url = `${basePath}/${apiVersion}/post/${urlpost}`;
+
+    return fetch(url)   
+        .then(response => {
+            return response.json();
+        })
+        .then(result => {
+            return result;
+        })
+        .catch(err => {
+            return err;
+        })
+}
