@@ -30,11 +30,40 @@ export default function PostsListWeb(props) {
                     message: "Error del servidor, intente más tarde"
                 });
             })
-    }, [page])
+    }, [page]);
+    
+    if(!posts){
+        return(
+            <Spin tip="cargando" style={{width:"100%", padding:"200px 0"}}/>
+        )
+    }
+    return (
+        <div className="posts-list-web">
+            <h1>Blog</h1>
+            <List
+                dataSource={posts.docs}
+                renderItem={ post => <Post post={post} />}
+            />
+            <Pagination posts={posts} location={location} history={history}/>
+        </div>
+    )
+}
+
+function Post(props){
+    const {post} = props;
+  
+    const day =  moment(post.date).format("DD");
+    const month =  moment(post.date).format("MMMM");
 
     return (
-        <div>
-            <h1>PostsListWeb</h1>
-        </div>
+        <List.Item className="post">
+            <div className="post__date">
+                <span>{day}</span>
+                <span>{month}</span>
+            </div>
+            <Link to={`blog/${post.url}`}>
+                <List.Item.Meta title={post.title}/>
+            </Link>
+        </List.Item>
     )
 }

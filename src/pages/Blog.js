@@ -7,7 +7,6 @@ export default function Blog(props) {
     const {location, history}= props;
     const {url} = useParams();
 
-    console.log(url);
     return (
 
         <Row>
