@@ -11,6 +11,7 @@ export default function Home(){
          <>
          <Helmet>
             <title>Pagina de citukcaamal</title>
+            <meta name="description" content="web de citukcaamal" data-react-helmet="true"/>
         </Helmet>
              <MainBanner/>
              <HomeCourses/>

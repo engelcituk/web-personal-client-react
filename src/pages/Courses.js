@@ -28,6 +28,7 @@ export default function Home(){
         <>
         <Helmet>
             <title>Cursos que he visto</title>
+            <meta name="description" content="cursos que ha visto citukcaamal" data-react-helmet="true"/>            
         </Helmet>
         <Row>
             <Col md={4}/>

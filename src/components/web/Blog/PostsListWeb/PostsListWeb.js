@@ -61,6 +61,8 @@ function Post(props){
         <>
         <Helmet>
             <title>Blog | citukcaamal </title>
+            <meta name="description" content="Blog citukcaamal"  data-react-helmet="true"/>            
+
         </Helmet>
         <List.Item className="post">
             <div className="post__date">

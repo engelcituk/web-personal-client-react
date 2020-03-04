@@ -39,6 +39,8 @@ export default function PostInfo(props) {
         <>
         <Helmet>
             <title>{postInfo.title}</title>
+            <meta name="description" content={postInfo.title}  data-react-helmet="true"/>            
+
         </Helmet>
         <div className="post-info">
             <h1 className="post-info__title">{postInfo.title}</h1>
